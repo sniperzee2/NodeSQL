@@ -7,13 +7,21 @@ const addUnion = async (req, res) => {
         userId: req.body.userId,
         listId: req.body.listId
     }
-    const union = await Union.create(info)
-    res.status(200).send(union)
+    try{
+        const union = await Union.create(info)
+        res.status(200).send(union)
+    }catch(err){
+        res.status(500).send(err)
+    }
 }
 
 const getAllUnion = async (req, res) => {
-    const union = await Union.findAll()
-    res.status(200).send(union)
+    try{
+        const union = await Union.findAll()
+        res.status(200).send(union)
+    }catch(err){
+        res.status(500).send(err)
+    }
 }
 
 module.exports = {

@@ -2,6 +2,7 @@ const db = require('./index.js')
 
 const User = db.user
 const List = db.list
+const Task = db.task
 
 
 module.exports = (sequelize, DataTypes) => {
