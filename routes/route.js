@@ -4,6 +4,7 @@ const userController = require('../controllers/userController')
 const taskController = require('../controllers/taskController')
 const listController = require('../controllers/listController')
 const resultsController = require('../controllers/resultController')
+const unionController = require('../controllers/unionController')
 
 router.post('/addCompany', companyController.addCompany)
 router.post('/getAllCompany', companyController.getAllCompany)
@@ -24,6 +25,9 @@ router.post('/addTask', taskController.addTask)
 router.get('/getAllTasks', taskController.getAllTask)
 router.get('/getTask/:tid', taskController.getTask)
 router.put('/updateTask/:tid', taskController.updateTask)
+
+router.post('/addUnion', unionController.addUnion)
+router.get('/getAllUnion', unionController.getAllUnion)
 
 router.post('/results/:cid', resultsController.results)
 

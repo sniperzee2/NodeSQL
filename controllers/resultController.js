@@ -6,31 +6,35 @@ const List = db.list
 const Task = db.task
 
 const results = async (req, res) => {
-    const company = await Company.findOne({
-        include: [{
-            model: User,
-            as: 'user',
+    try{
+        const company = await Company.findOne({
             include: [{
-                model: List,
-                as: 'list',
+                model: User,
+                as: 'user',
                 include: [{
-                    model: Task,
-                    as: 'task',
-                    where: {
-                        pending: true
-                    }
+                    model: List,
+                    as: 'list',
+                    include: [{
+                        model: Task,
+                        as: 'task',
+                        where: {
+                            pending: true
+                        }
+                    }],
                 }],
+                where: {id: req.body.uid}
             }],
-            where: {id: req.body.uid}
-        }],
-        where: {id: req.params.cid}
-    })
-    if(company){
-        res.status(200).send(company)
-    }else{
-        res.status(404).json({
-            message: 'No user'
+            where: {id: req.params.cid}
         })
+        if(company){
+            res.status(200).send(company)
+        }else{
+            res.status(404).json({
+                message: 'No user'
+            })
+        }
+    }catch(err){
+        res.status(500).send(err)
     }
 }
 

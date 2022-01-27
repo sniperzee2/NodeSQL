@@ -17,19 +17,31 @@ const getAllList = async (req, res) => {
 }
 
 const getList = async (req, res) => {
-    const list = await List.findOne({
-        where: {
-            id: req.params.lid
-        }
-    })
-    res.status(200).send(list)
+    try{
+        const list = await List.findOne({
+            include: [{
+                model: db.user,
+                as: 'user'
+            }], 
+            where: {
+                id: req.params.lid
+            }
+        })
+        res.status(200).send(list)
+    }catch(err){
+        res.status(500).send(err)
+    }
+    
 }
 
 const updateList = async (req, res) => {
-
-    const list = await List.update(req.body, { where: { id:  req.params.lid }})
+    try{
+        const list = await List.update(req.body, { where: { id:  req.params.lid }})
 
     res.status(200).send(list)
+    }catch(err){
+        res.status(500).send(err)
+    }
 }
 
 module.exports = {

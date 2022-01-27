@@ -30,6 +30,7 @@ db.company = require('./Company.js')(sequelize, DataTypes)
 db.user = require('./User.js')(sequelize,DataTypes)
 db.list = require('./List.js')(sequelize,DataTypes)
 db.task = require('./Task.js')(sequelize,DataTypes)
+db.union = require('./Union.js')(sequelize,DataTypes)
 
 db.sequelize.sync({force: false})
 .then(() => {
@@ -46,13 +47,13 @@ db.user.belongsTo(db.company,{
     as: 'company'
 })
 
-db.user.hasMany(db.list,{
-    foreignKey: 'userId',
+db.user.belongsToMany(db.list,{
+    through: db.union,
     as: 'list'
 })
 
-db.list.belongsTo(db.user,{
-    foreignKey: 'userId',
+db.list.belongsToMany(db.user,{
+    through: db.union,
     as: 'user'
 })
 
